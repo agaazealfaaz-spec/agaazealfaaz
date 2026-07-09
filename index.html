@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agaaz e Alfaaz</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <svg style="position: absolute; width: 0; height: 0; pointer-events: none;">
+        <filter id="grainy-noise">
+            <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="4" stitchTiles="stitch" />
+            <feColorMatrix type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 0.06 0" />
+        </filter>
+    </svg>
+
+    <div id="intro-screen">
+        <h1 class="intro-text" id="intro-phrase">A home for unfinished feelings</h1>
+    </div>
+
+    <canvas id="feather-canvas"></canvas>
+    <img src="1.png" alt="" class="floating-asset asset-1">
+    <img src="2.png" alt="" class="floating-asset asset-2">
+    <img src="3.png" alt="" class="floating-asset asset-3">
+    <img src="4.png" alt="" class="floating-asset asset-4">
+
+    <div class="control-panel">
+        <button class="control-btn" id="lang-btn">اردو</button>
+        <button class="control-btn" id="theme-btn">Light Mode</button>
+    </div>
+
+    <main id="main-content">
+        
+        <section class="hero">
+            <video src="hero.mp4" autoplay loop muted playsinline preload="auto"></video>
+            <h1 class="hero-title" id="hero-main-title">Agaaz e Alfaaz</h1>
+            <h2 class="hero-subtitle" id="hero-sub-title">A home for unfinished feelings</h2>
+            <a href="#poetry" class="btn" id="hero-cta-btn">Explore Feelings</a>
+        </section>
+
+        <section id="poetry" class="poetry-section reveal">
+            <h2 class="section-title" id="slider-section-heading">Whispers of the Soul</h2>
+            <div class="horizontal-scroll-container" id="scroll-track">
+                </div>
+        </section>
+
+        <section class="contact-section reveal">
+            <div class="contact-form-card glass-card" id="poetry-submission-form" data-whatsapp="918791216109">
+                <h2 class="form-title" id="form-heading">Submit Your Poetry</h2>
+                <div class="input-group">
+                    <input type="text" id="author-name" required autocomplete="off" placeholder="Your Name">
+                </div>
+                <div class="input-group">
+                    <textarea id="poetry-body" required placeholder="Pour your heart here..."></textarea>
+                </div>
+                <button type="button" class="btn" id="form-submit-btn" onclick="handleFormRouting()">Send via WhatsApp</button>
+            </div>
+        </section>
+
+    </main>
+
+    <div id="poem-modal" role="dialog" aria-hidden="true">
+        <div class="modal-content glass-card">
+            <button class="close-btn" aria-label="Close modal">&times;</button>
+            <div id="modal-typography-target"></div>
+            <a href="https://www.instagram.com/agaaz.e.alfaaz/" target="_blank" rel="noopener noreferrer" class="btn modal-link-btn" id="modal-instagram-link">Read more on Instagram</a>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

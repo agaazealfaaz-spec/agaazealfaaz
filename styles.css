@@ -1,0 +1,466 @@
+/* Core Styling Matrix & Light/Dark Theming Adaptations */
+:root {
+    --bg-color: #0B0B0C;
+    --text-color: #E3D4B6;
+    --glass-bg: rgba(227, 212, 182, 0.03);
+    --glass-border: rgba(227, 212, 182, 0.12);
+    --accent-color: #C5B28A;
+    --font-cursive: 'Pinyon Script', cursive;
+    --font-serif: 'Playfair Display', serif;
+    --font-urdu: 'Noto Nastaliq Urdu', serif;
+    --global-font: var(--font-serif);
+    --global-direction: ltr;
+}
+
+[data-theme="light"] {
+    --bg-color: #F9F6F0;
+    --text-color: #2C2520;
+    --glass-bg: rgba(44, 37, 32, 0.04);
+    --glass-border: rgba(44, 37, 32, 0.14);
+    --accent-color: #8C7A65;
+}
+
+[data-lang="urdu"] {
+    --global-font: var(--font-urdu);
+    --global-direction: rtl;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    transition: background-color 0.8s cubic-bezier(0.25, 1, 0.5, 1), color 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: var(--global-font);
+    direction: var(--global-direction);
+    overflow-x: hidden;
+    line-height: 1.7;
+}
+
+/* Splash Intro Screen Mask */
+#intro-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: var(--bg-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    transition: opacity 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.intro-text {
+    font-family: var(--font-cursive);
+    font-size: clamp(2.2rem, 6.5vw, 5rem);
+    color: var(--accent-color);
+    opacity: 0;
+    text-align: center;
+    padding: 0 1.5rem;
+    animation: maskIntroCycle 3.8s forwards ease-in-out;
+}
+
+@keyframes maskIntroCycle {
+    0% { opacity: 0; transform: scale(0.96); letter-spacing: 0px; }
+    35% { opacity: 1; transform: scale(1); }
+    75% { opacity: 1; transform: scale(1); }
+    100% { opacity: 0; transform: scale(1.02); }
+}
+
+/* Ambient Environment Elements Space */
+#feather-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.floating-asset {
+    position: fixed;
+    width: clamp(120px, 15vw, 180px);
+    opacity: 0.55;
+    pointer-events: none;
+    z-index: 0;
+    animation: driftMotion 14s infinite alternate ease-in-out;
+}
+.asset-1 { top: -20px; left: -20px; }
+.asset-2 { top: -20px; right: -20px; animation-delay: 2.5s; }
+.asset-3 { bottom: -20px; left: -20px; animation-delay: 5s; }
+.asset-4 { bottom: -20px; right: -20px; animation-delay: 1.2s; }
+
+@keyframes driftMotion {
+    0% { transform: translateY(0) rotate(0deg) scale(1); }
+    100% { transform: translateY(30px) rotate(7deg) scale(1.05); }
+}
+
+/* Interface Dynamic Control Nodes Row */
+.control-panel {
+    position: fixed;
+    top: 2rem;
+    right: 2rem;
+    display: flex;
+    gap: 1rem;
+    z-index: 1000;
+}
+
+[data-lang="urdu"] .control-panel {
+    right: auto;
+    left: 2rem;
+}
+
+.control-btn {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    color: var(--text-color);
+    padding: 0.7rem 1.4rem;
+    border-radius: 30px;
+    cursor: pointer;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    font-family: var(--font-serif);
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+.control-btn:hover {
+    border-color: var(--accent-color);
+    transform: translateY(-2px);
+}
+
+/* Premium Semi-Transparent Glassmorphic Card Styling Frame with Noise Generation Overlay */
+.glass-card {
+    position: relative;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.glass-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    filter: url(#grainy-noise);
+    border-radius: inherit;
+    pointer-events: none;
+}
+
+/* Hero Section Workspace Layouts */
+.hero {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    z-index: 2;
+    overflow: hidden;
+    padding: 0 1.5rem;
+}
+
+.hero video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+    opacity: 0.52;
+}
+
+.hero-title {
+    font-family: var(--font-cursive);
+    font-size: clamp(3.8rem, 10vw, 8.5rem);
+    font-weight: 400;
+    margin-bottom: 0.2rem;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: revealHeroUnit 1.4s 4.2s forwards cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+[data-lang="urdu"] .hero-title {
+    font-family: var(--font-urdu);
+    font-size: clamp(2.2rem, 6vw, 4.5rem);
+    font-weight: 700;
+}
+
+.hero-subtitle {
+    font-family: var(--font-serif);
+    font-size: clamp(1.1rem, 3vw, 1.8rem);
+    font-weight: 400;
+    font-style: italic;
+    margin-bottom: 3rem;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: revealHeroUnit 1.4s 4.6s forwards cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+[data-lang="urdu"] .hero-subtitle {
+    font-family: var(--font-urdu);
+    font-style: normal;
+}
+
+.btn {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    color: var(--text-color);
+    padding: 1rem 2.8rem;
+    font-size: 1rem;
+    font-family: var(--font-serif);
+    text-decoration: none;
+    border-radius: 50px;
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    cursor: pointer;
+    display: inline-block;
+    transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    opacity: 0;
+    transform: translateY(30px);
+    animation: revealHeroUnit 1.4s 5s forwards cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+[data-lang="urdu"] .btn {
+    font-family: var(--font-urdu);
+}
+
+.btn:hover {
+    background: var(--text-color);
+    color: var(--bg-color);
+    transform: translateY(-4px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+}
+
+@keyframes revealHeroUnit {
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Scroll Animation Transitions Intersections Layout */
+.reveal {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 1.3s cubic-bezier(0.25, 1, 0.5, 1), transform 1.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Horizontal Card Track Assembly */
+.poetry-section {
+    padding: 14vh 0;
+    z-index: 2;
+    position: relative;
+}
+
+.section-title {
+    text-align: center;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    margin-bottom: 4rem;
+    font-style: italic;
+    font-weight: 400;
+}
+[data-lang="urdu"] .section-title {
+    font-family: var(--font-urdu);
+    font-style: normal;
+}
+
+.horizontal-scroll-container {
+    display: flex;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding: 2.5rem 8vw;
+    gap: 3rem;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+.horizontal-scroll-container::-webkit-scrollbar {
+    display: none;
+}
+
+.poetry-card {
+    min-width: 290px;
+    width: 350px;
+    height: 440px;
+    padding: 3rem 2.2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.5s ease, box-shadow 0.5s ease;
+}
+
+.poetry-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    border-color: var(--accent-color);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+}
+
+.card-snippet {
+    font-size: 1.25rem;
+    margin-bottom: 1.5rem;
+    font-style: italic;
+}
+[data-lang="urdu"] .card-snippet {
+    font-family: var(--font-urdu);
+    font-style: normal;
+    line-height: 2.4;
+}
+
+/* Unified Target Modal Overlay System */
+#poem-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.72);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    z-index: 5000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+#poem-modal.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.modal-content {
+    padding: 5rem 3.5rem 4rem 3.5rem;
+    width: 90%;
+    max-width: 600px;
+    text-align: center;
+    position: relative;
+    transform: scale(0.92);
+    transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+    box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+}
+
+#poem-modal.active .modal-content {
+    transform: scale(1);
+}
+
+.close-btn {
+    position: absolute;
+    top: 1.5rem;
+    right: 2rem;
+    font-size: 2.5rem;
+    cursor: pointer;
+    color: var(--text-color);
+    background: none;
+    border: none;
+    outline: none;
+    opacity: 0.6;
+    transition: opacity 0.3s;
+}
+[data-lang="urdu"] .close-btn {
+    right: auto;
+    left: 2rem;
+}
+.close-btn:hover {
+    opacity: 1;
+}
+
+.modal-text-block {
+    font-size: 1.3rem;
+    line-height: 2.2;
+    margin-bottom: 2.5rem;
+    white-space: pre-wrap;
+    min-height: 120px;
+}
+[data-lang="urdu"] .modal-text-block {
+    font-family: var(--font-urdu);
+    line-height: 2.8;
+}
+
+.modal-link-btn {
+    opacity: 1;
+    transform: none;
+    animation: none;
+    font-size: 0.9rem;
+    padding: 0.8rem 2.2rem;
+}
+
+/* Input Array Elements Form */
+.contact-section {
+    padding: 10vh 1.5rem 18vh 1.5rem;
+    display: flex;
+    justify-content: center;
+    z-index: 2;
+    position: relative;
+}
+
+.contact-form-card {
+    padding: 4rem 3.5rem;
+    width: 100%;
+    max-width: 580px;
+    text-align: center;
+}
+
+.form-title {
+    font-size: 2rem;
+    margin-bottom: 2.5rem;
+    font-style: italic;
+    font-weight: 400;
+}
+[data-lang="urdu"] .form-title {
+    font-family: var(--font-urdu);
+    font-style: normal;
+}
+
+.input-group {
+    position: relative;
+    margin-bottom: 2.5rem;
+}
+
+.contact-form-card input,
+.contact-form-card textarea {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--glass-border);
+    color: var(--text-color);
+    font-family: var(--global-font);
+    font-size: 1.1rem;
+    padding: 0.8rem 0;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.contact-form-card input:focus,
+.contact-form-card textarea:focus {
+    border-bottom-color: var(--accent-color);
+}
+
+.contact-form-card textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+#form-submit-btn {
+    opacity: 1;
+    transform: none;
+    animation: none;
+    margin-top: 1rem;
+    width: 100%;
+}
